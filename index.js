@@ -3,10 +3,19 @@ const fs = require('fs');
 
 const svgGen = (data) =>
 
-`
+//.svg logo
+
+// //render() {
+//     return `<circle cx="150" cy="100" r="80" fill="${this.color}" />`;
+//   }
+// const createShape = (color) => {
+// }
+// const createLogo = (data) =>
+//create prompt function for inputs
+//limit of only 3 characters
+//text color
 
 
-`
 
 inquirer
   .prompt([
@@ -42,6 +51,7 @@ inquirer
       err ? console.log(err) : console.log('Success!')
     );
   });
+
 
 function init() {}
 init();
