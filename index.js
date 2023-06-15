@@ -1,7 +1,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const svgGen = (data) =>
+const {Square, Circle, Triangle} =  require("./lib/shapes");
+const SVG = require("./lib/svg");
+const {writeFile} = require("fs/promises");
+
+const svgGen = () => {
+
 
 //.svg logo
 
@@ -22,7 +27,8 @@ inquirer
     {
       type: 'input',
       name: 'logoText',
-      message: 'Please provide the text.',
+      message: 'Please provide the text, up to three characters.',
+      validate: (logoText) => logoText.length <= 3 || "THREEEEEEEE"
     },
     {
       type: 'input',
@@ -43,15 +49,39 @@ inquirer
 
 ])
 
+.then(({logoText, logoColor, logoShape, logoShapeColor}) => {
+    let shapeEl 
+    switch (logoShape) {
+        case "circle": 
+            shapeEl = new Circle()
+            break;
+        case "square": 
+            shapeEl = new Square()
+            break;
+        case "triangle": 
+            shapeEl = new Triangle()
+            break;
 
-.then((userSelection) => {
-    const svgChoice = svgGen(userSelection);
+    }
+    shapeEl.setColor(logoShapeColor)
+    const svg = new SVG()
+    svg.setText(logoText, logoColor)
+    svg.setShape(shapeEl)
+    return writeFile("userLogo.SVG", svg.render())
+})
+.then(() => {
+    console.log("Success!!!")
+})
+.catch((err) => {
+    // const svgChoice = svgGen(userSelection);
     //aa
-    fs.writeFile("", svgChoice, (err) =>
-      err ? console.log(err) : console.log('Success!')
-    );
+    // fs.writeFile("", svgChoice, (err) =>
+    //   err ? console.log(err) : console.log('Success!')
+    // );
+    console.log(err)
+    console.log("Failure! Try again!")
   });
 
-
-function init() {}
-init();
+}
+//Invokes the function
+svgGen()
