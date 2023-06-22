@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+//variables for the svg to be used later
 const {Square, Circle, Triangle} =  require("./lib/shapes");
 const SVG = require("./lib/svg");
 const {writeFile} = require("fs/promises");
@@ -21,7 +22,7 @@ const svgGen = () => {
 //text color
 
 
-
+//prompts for the svg creation
 inquirer
   .prompt([
     {
@@ -49,6 +50,7 @@ inquirer
 
 ])
 
+
 .then(({logoText, logoColor, logoShape, logoShapeColor}) => {
     let shapeEl 
     switch (logoShape) {
@@ -60,6 +62,7 @@ inquirer
             break;
         case "triangle": 
             shapeEl = new Triangle()
+            //ends function
             break;
 
     }
